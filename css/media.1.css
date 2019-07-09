@@ -1,0 +1,363 @@
+/* --------------------------- */
+/* Media quries Section */
+/* --------------------------- */
+
+/* Phones */
+
+/* @media screen and (max-width: 768px){     */
+/* @media screen and (max-width: 500px) and (orientation : portrait){  */
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+  /* Global */
+  .section-heading{
+      padding: 1.5rem !important;
+  }
+  .section-heading h2 {
+      font-size: 2rem !important;       
+    }
+     
+    .section-heading p {
+      font-size: 1rem !important;        
+    }
+
+  /* Navbar */
+  .navbar-brand {
+      font-size: 1.5rem !important;
+  }
+  .icons-nav {        
+      padding: 2rem;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+
+  /* Head */
+  .main-title .heading .main-heading {
+      font-size: 3rem !important;
+  }
+    
+  .main-title .heading .sub-heading {
+      font-size: 1.5rem !important;
+      height: 2rem;
+  }    
+  
+  #slides .contacts a {
+      font-size: 1.5rem;       
+  }
+   
+
+  /* About */
+  #about {
+      padding: 0 2rem;
+      margin: 3rem 0;
+  } 
+
+  .about-container {
+      flex-direction: column;
+      padding: 0rem 0rem;       
+  }
+  
+
+  .about-image {
+      background-image: url("../img/pf_pict_ipad.jpg");        
+      height: 20rem;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+  
+
+  .about-description {
+      padding-left: 0 !important;        
+      font-size: 1.2rem !important;
+  }
+
+  /* Experience */
+  #experience {
+      margin: 3rem 0;
+  }
+
+  .timeline {
+      padding: 1rem 0;      
+  }
+  
+  .timeline h1 {
+      padding-top: 1.5rem;
+      font-size: 1.2rem;       
+  }
+
+  .timeline ul {
+      border-radius: 0;  
+      padding: 3rem; 
+      width: 90%;
+  }
+
+  .timeline p {
+      margin-top: 0;
+      margin-bottom: 2rem;
+  }
+
+  .timeline ul li:last-of-type p {        
+      margin-bottom: 0;
+  }    
+  
+  .timeline .date::before {
+      left: -1rem;
+      top :0;
+      text-align: left;
+      min-width: 5rem;
+      font-size: 1.2rem;
+  }
+
+  .timeline .date::after {       
+      top:0;        
+      left: -3.9rem;       
+  }
+
+  /* skills */
+  #skills {
+      margin-bottom: 3rem;
+  }
+  .skills .container{
+      width:100%;        
+      margin: 0;
+      padding: 0;
+  }
+  .my-skills{ 
+      width: 100%;
+      margin: 0 !important;
+  }
+
+  .flip-wrapper {       
+      margin: 0 !important;
+      max-width: 80% !important;
+      border: 1px dashed #c0392b;
+      margin-left: 7% !important;               
+  }
+  
+  .icon-container {
+      width: 6rem !important;
+      height: 6rem !important;        
+      margin-bottom: 1rem;
+  }
+
+  .icon-container i {
+      font-size: 3rem !important; 
+  }
+
+  .flip-card-front {
+      text-align: center;
+  }
+
+  .flip-card-back h2 {
+      font-size: 1.5rem;
+  }
+
+  .flip-card-back ul {
+      padding-left: 0;
+  }
+
+  
+  /* Publications */
+
+  .publication {        
+      font-size: 0.7rem;
+      padding: 0 !important;
+  }    
+  
+  .hide-publications  {
+      font-size: 2rem !important;
+      display: block;
+      margin: auto;
+      text-align: center;
+  }
+
+  /* footer */
+  .up {        
+      right: 1rem !important;
+  }
+
+  .copyright-section p {       
+      font-size: 1.2rem;
+  }
+    
+  .footer-contact {        
+      font-size:0.8rem;
+  } 
+ 
+} 
+
+/* @media only screen 
+and (min-width : 375px) 
+and (max-width : 667px) 
+and (orientation : landscape) { */
+
+/* 
+##Device = Low Resolution Tablets, Mobiles (Landscape)
+##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+  /* Head */
+   .main-title .heading .main-heading {
+      font-size: 2rem;
+  }
+    
+  .main-title .heading .sub-heading {
+      font-size: 1rem !important;
+      height: 2rem;
+  }     
+  
+  
+  
+  #slides .contacts a {
+      font-size: 1.2rem;       
+  }
+  
+  
+  .about-container {
+      display: initial;
+      padding: 0rem 0rem;       
+  }
+
+  .about-image {
+      background-size: contain !important;
+      background-image: url("../img/pf_pict_ipad.jpg");   
+      background-repeat: no-repeat;     
+      height: 20rem !important;                
+      width: 60% !important;
+      float:left;
+    }    
+    
+
+  .about-description {
+      padding-left: 0 !important;        
+      font-size: 1rem !important;
+  }
+
+}
+
+
+/* Medium screens tablets */
+@media screen and (min-width: 501px) and (max-width: 768px) and (orientation : portrait) {
+  
+  .navbar-brand {
+      font-size: 2rem !important;
+  }
+  
+  .icons-nav {        
+      padding: 2rem 4rem;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+
+  #about {        
+      margin: 0;
+  } 
+
+  .about-container {
+      display: initial;
+      padding: 0rem 0rem;       
+  }
+
+  .about-image {
+      background-size: contain !important;
+      background-image: url("../img/pf_pict_ipad.jpg");   
+      background-repeat: no-repeat;     
+      height: 20rem !important;                
+      width: 50% !important;
+      float:left;
+
+    }
+
+  .about-description {
+      padding-left: 0 !important;        
+      font-size: 1.2rem !important;
+  }
+
+  /* Experience */ 
+
+  #experience {
+      margin-bottom: 3rem;
+  }
+
+  .timeline {
+      padding: 3rem 0 3rem 6rem;        
+  }
+    
+  .timeline ul { 
+      width: 80%;         
+  }  
+    
+  .timeline .date::before {       
+      left: -18.5rem; 
+      font-size: 1.2rem;
+  }
+  
+  .timeline .date::after {          
+      left: -5.8rem;
+      background-color: #313534;
+  }
+
+  /* skills */
+
+  .flip-wrapper{ 
+     border: 1px dashed #000;        
+  }
+
+  #skills {
+      margin-bottom: 6rem;
+  }
+
+}
+
+
+
+/* 
+##Device = Tablets, Ipads (landscape)
+##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+  /* Head */
+  .main-title .heading .main-heading {
+      font-size: 3rem !important;
+  }
+    
+  .main-title .heading .sub-heading {
+      font-size: 2rem !important;
+      height: 2rem;
+  }      
+
+  .about-container {
+      display: initial;
+      padding: 0rem 0rem;       
+  }
+
+  .about-image {
+      background-size: contain !important;
+      background-image: url("../img/pf_pict_ipad.jpg");   
+      background-repeat: no-repeat;     
+      height: 20rem !important;                
+      width: 25% !important;
+      float:left;
+    }
+
+  .about-description {
+      padding-left: 0 !important;        
+      font-size: 1.2rem !important;
+  }
+
+  .timeline {
+      padding: 3rem 0 3rem 9rem;        
+  }
+
+}
+
+
+

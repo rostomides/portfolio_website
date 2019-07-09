@@ -1,0 +1,440 @@
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  /* Global */
+    .section-heading{
+        padding: 1.5rem !important;
+    }
+    .section-heading h2 {
+        font-size: 2rem !important;       
+    }
+    
+    .section-heading p {
+        font-size: 1rem !important;        
+    }
+
+    /* Navbar */
+    .navbar-brand {
+        font-size: 1.5rem !important;
+    }
+    .icons-nav {        
+        padding: 2rem;
+        flex-direction: row;
+        justify-content: space-between;
+    }    
+
+    /* Head */
+    .main-title .heading .main-heading {
+        font-size: 3rem !important;
+    }
+    
+    .main-title .heading .sub-heading {
+        font-size: 1.5rem !important;
+        height: 2rem;
+    }    
+
+    #slides .contacts a {
+        font-size: 1.5rem;       
+    }
+    
+
+    /* About */
+    #about {
+        padding: 0 2rem;
+        margin: 3rem 0;
+    } 
+
+    .about-container {
+        flex-direction: column;
+        padding: 0rem 0rem;       
+    }
+
+
+    .about-image {
+        background-image: url("../img/pf_pict_ipad.jpg");        
+        height: 20rem;
+        margin-bottom: 2rem;
+        width: 100%;
+    }
+
+
+    .about-description {
+        padding-left: 0 !important;        
+        font-size: 1.2rem !important;
+    }
+
+    /* Experience */
+    #experience {
+        margin: 3rem 0;
+    }
+
+    .timeline {
+        padding: 1rem 0;      
+    }
+
+    .timeline h1 {
+        padding-top: 1.5rem;
+        font-size: 1.2rem;       
+    }
+
+    .timeline ul {
+        border-radius: 0;  
+        padding: 3rem; 
+        width: 90%;
+    }
+
+    .timeline p {
+        margin-top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .timeline ul li:last-of-type p {        
+        margin-bottom: 0;
+    }    
+
+    .timeline .date::before {
+        left: -1rem;
+        top :0;
+        text-align: left;
+        min-width: 5rem;
+        font-size: 1.2rem;
+    }
+
+    .timeline .date::after {       
+        top:0;        
+        left: -3.9rem;       
+    }
+
+    /* skills */
+    #skills {
+        margin-bottom: 3rem;
+    }
+    .skills .container{
+        width:100%;        
+        margin: 0;
+        padding: 0;
+    }
+    .my-skills{ 
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    .flip-wrapper {       
+        margin: 0 !important;
+        max-width: 80% !important;
+        border: 1px dashed #c0392b;
+        margin-left: 7% !important;               
+    }
+
+    .icon-container {
+        width: 6rem !important;
+        height: 6rem !important;        
+        margin-bottom: 1rem;
+    }
+
+    .icon-container i {
+        font-size: 3rem !important; 
+    }
+
+    .flip-card-front {
+        text-align: center;
+    }
+
+    .flip-card-back h2 {
+        font-size: 1.5rem;
+    }
+
+    .flip-card-back ul {
+        padding-left: 0;
+    }
+
+    /* Publications */
+
+    .publication {        
+        font-size: 0.7rem;
+        padding: 0 !important;
+    }    
+
+    .hide-publications  {
+        font-size: 2rem !important;
+        display: block;
+        margin: auto;
+        text-align: center;
+    }
+
+    /* footer */
+    .up {        
+        right: 1rem !important;
+    }
+
+    .copyright-section p {       
+        font-size: 1.2rem;
+    }
+    
+    .footer-contact {        
+        font-size:0.8rem;
+    }     
+}
+
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .icons-nav {        
+        padding: 2rem 4rem;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    
+    /* Head */
+    .main-title .heading .main-heading {
+        font-size: 2rem;
+    }
+    
+    .main-title .heading .sub-heading {
+        font-size: 1rem !important;
+        height: 2rem;
+    }  
+
+    #slides .contacts a {
+        font-size: 2rem;       
+    }
+
+    .about-container {
+        display: initial;
+        padding: 0rem 0rem;       
+    }
+
+    .about-image {
+        background-size: contain !important;
+        background-image: url("../img/pf_pict_ipad.jpg");   
+        background-repeat: no-repeat;     
+        height: 19rem !important;                
+        width: 40% !important;
+        float:left;
+        margin-right: 2rem;        
+       /* padding-right: 1rem; */
+    }        
+
+    .about-description {
+        padding-left: 0 !important;
+        margin-left: 0;        
+        font-size: 1rem !important;
+    }
+
+    /* Experience */ 
+    #experience {
+        margin-bottom: 3rem;
+    }
+
+    .timeline {
+        padding: 3rem 0 3rem 0rem;  
+        margin-left: 7rem;      
+    }
+    
+    .timeline ul { 
+        width: 100%;         
+    }  
+    
+    .timeline .date::before {       
+        left: -18.5rem; 
+        font-size: 1.2rem;
+    }
+
+    .timeline .date::after {          
+        left: -5.8rem;
+        background-color: #313534;
+    }   
+}
+
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {   
+    
+    .icons-nav {        
+        padding: 0rem !important;
+        flex-direction: row;
+        justify-content: left !important;
+        margin: 0;        
+    }
+
+    .about-container {
+        display: initial;
+        padding: 0rem 0rem;       
+    }
+  
+    .about-image {
+        background-size: contain !important;
+        background-image: url("../img/pf_pict_ipad.jpg");   
+        background-repeat: no-repeat;     
+        height: 18rem !important;                
+        width: auto !important;
+        background-position: center;        
+        float:left;    
+    }       
+
+    .about-description {
+        padding-left: 0 !important;
+        margin-left: 0;        
+        font-size: 1rem !important;
+    }
+
+    #experience {
+        margin-bottom: 3rem;
+    }
+
+    .timeline {
+        padding: 3rem 0 3rem 9rem;        
+    }   
+    
+    #skills {
+        margin-bottom: 3rem;
+    }
+
+    .flip-card-front h2 {
+        font-size: 1.5rem;;
+    }
+}
+
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .icons-nav {        
+        padding-right: 1rem;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .about-container {
+        display: initial;
+        padding: 0rem 0rem;       
+    }
+  
+    .about-image {
+        background-size: contain !important;
+        background-image: url("../img/pf_pict_ipad.jpg");   
+        background-repeat: no-repeat;     
+        height: 18rem;                
+        width: 30% !important;
+        float:left;        
+        background-position: center;
+    }       
+
+    .about-description {
+        padding-left: 0 !important;
+        margin-left: 0;        
+        font-size: 1rem !important;
+    }
+
+    #experience {
+        margin-bottom: 3rem;
+    }
+
+    .timeline {
+        padding: 2rem 0 3rem 6rem;        
+    }   
+  
+
+    .flip-wrapper {       
+        margin: 0 !important;
+        max-width: 80% !important;
+        border: 1px dashed #c0392b;
+        margin-left: 10% !important;               
+    }
+
+    #skills {
+        margin-bottom: 3rem;
+    }
+
+    .flip-card-front h2 {
+        font-size: 1.5rem;;
+    }    
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1367px) {
+    
+
+    .about-container {
+        display: initial;
+        padding: 0rem 0rem;
+              
+    }
+  
+    .about-image {
+        background-size: contain !important;
+        background-image: url("../img/pf_pict_ipad.jpg");   
+        background-repeat: no-repeat;     
+        height: 17rem;                
+        width: 20% ;
+        float:left;        
+        background-position: center;
+    }       
+
+    .about-description { 
+        font-size: 1.2rem !important;
+    }
+
+    #experience {
+        margin-bottom: 3rem;
+    }
+
+    #skills {
+        margin-bottom: 3rem !important;
+    }  
+}
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1368px) {
+    .about-container {
+        display: initial;
+        padding: 0rem 6rem;       
+    }
+
+    .about-image {
+        width: 20% !important;
+        height: 25rem;
+        background-image: url("../img/pf_pict_ipad.jpg");
+        float: left;
+        margin-right: 2rem;
+    }
+  
+    
+    .about-description {
+        padding-right: 6rem ;
+        margin-left: 1rem; 
+    }
+
+    #skills {
+        margin-bottom: 3rem !important;
+    }   
+    
+    
+}
