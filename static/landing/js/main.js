@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 
   // Typed js code
-  var who = ["Bioinformatician.", "Data Scientist.", "Researcher.", "Language Enthusiast"];
+  var who = ["Bioinformatician.", "Data Scientist.", "Researcher.", "Language Enthusiast."];
   var typed = new Typed('.main-title .heading .sub-heading', {
     strings: who,
     typeSpeed: 70,
