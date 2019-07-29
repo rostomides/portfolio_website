@@ -255,7 +255,7 @@ head .slides-container img {
   color: #c0392b;
   opacity: 1;
 }
-
+ 
 .timeline .date {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: .5rem;
@@ -423,6 +423,64 @@ head .slides-container img {
   cursor: pointer;
   
 }
+
+/* --------------------------- */
+/* projects sections Section */
+/* --------------------------- */
+#projects {
+  margin-bottom: 3rem;
+}
+
+#projects .project-title {
+  color: #c0392b;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.feature-list {
+  list-style: none;
+  font-size: 1.2rem;
+
+}
+
+.feature-list li.title{
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: inherit;
+  margin-top: 0.5rem;
+  color: #c0392b; 
+
+}
+
+.feature-list li i {  
+  color: #c0392b; 
+}
+
+.feature-list li{  
+  font-size: 1rem;
+  padding-left: 0.8rem;
+  text-align: justify;
+}
+
+.link-project{ 
+  text-decoration: none;  
+  text-align: right;
+  color: #c0392b; 
+  display:block;
+}
+
+.link-project:hover{
+  text-decoration: none;
+  font-weight: bold;  
+  color: #c0392b; 
+}
+
+.img-project {
+  border: 1px #c0392b solid;
+}
+
+
+
 
 
 /* --------------------------- */

@@ -43,13 +43,15 @@
           <li class="nav-item">
             <a class="nav-link" href="#skills">Skills</a>
           </li>
+          
+          <li class="nav-item">
+            <a  class="nav-link" href="#projects">Projects</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="#publications">Publications</a>
-          </li>
-  
-          <li class="nav-item">
-            <a  href="{{ url_for('biom_project') }}">Biom Project</a>
-          </li>
+          </li>  
+          
 
         </ul>
   
@@ -304,45 +306,80 @@
                   </div>
                 </div>
               </div>
-          </div>
-
-          
-      
-
-
-
-
-
-
-
-        <!-- <div class="skill">
-          <div class="icon-container">
-            <i class="fas fa-dna"></i>
-          </div>
-          <h1>Bioinformatics</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, minima.</p>
-        </div>
-        <div class="skill">
-          <div class="icon-container">
-            <i class="fas fa-chart-area"></i>
-          </div>
-          <h1>Data Science</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, minima.</p>
-        </div>
-
-        <div class="skill">
-          <div class="icon-container">
-            <i class="fas fa-code"></i>
-          </div>
-          <h1>Programming</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, minima.</p>
-        </div> -->
-
+          </div>  
       </div>
     </div>
   </section>
 
   <!-- End Skills Section -->
+
+
+  <!-- Section Current_projects -->
+  <section id="projects" class="projects-section section">
+    <div class="row ">
+      <div class="col-md-12 text-center section-heading">
+        <h2>My Projects</h2>
+        <p>List of ongoing projects I am working on or already finished ...</p>
+      </div>
+    </div>
+    <div class="container">
+
+      <div class="row project-details">
+          
+          <div class="col-md-5 pt-3"> <img class="img-fluid img-project" src="../static/img/biom_project.png" alt=""></div>
+
+          <div class="col-md-7">
+            <p>
+              <span class="project-title">Biom Visualizer </span>  is a web application that allows the user to interactively visualize Operational Taxonomic Units (OTUs) tables. It is optomized for GreenGenes taxonomy.
+            </p>  
+            <ul class="feature-list">              
+              <li class="title">Current features</li> 
+
+              <li><i class="fas fa-check"></i> Load OTU Tables</li>
+              <li><i class="fas fa-check"></i> Visualize the different taxonomic levels of a single sample</li>
+              <li><i class="fas fa-check"></i> Compare several samples at all available taxonomic levels</li> 
+
+              <li class="title">Upcoming features</li>
+              <li>
+                Predict if the microbial profiles input by the user are similar to Inflammatory Bowel Diseases profiles. The predictive model is currently in development and uses the power of machine learning on publically available 16S sequencing datasets of human gut microbiome.
+              </li>   
+            </ul>
+
+            <a href="{{url_for('biom_project')}}" class="link-project">Take me there ...</a>
+            
+          </div>
+
+          
+         
+
+
+      </div>
+
+      
+
+    </div>
+  </section>
+  <!-- End Section experience -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
