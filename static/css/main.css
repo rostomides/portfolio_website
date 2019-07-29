@@ -1,51 +1,148 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  letter-spacing: 1px;
+  overflow-x: hidden; 
+}
+
 body {
+  width: 100vw !important;
+  overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
+  padding:0;  
+}
+
+
+/* Navbar */
+.jumbotron {
+  margin-top: 20vh;
+  background-color: #c0392b; 
+  color: #fff;
+}
+
+.jumbotron a,
+.jumbotron a:hover{
+  color: #fff;
+  text-decoration: none;
+}
+
+.jumbotron a:hover{
+  font-weight: bold;
+}
+
+/* Format message list */
+#messages {
+  list-style: none;
+}
+
+/* Upload Button */
+#upload-button {
+  background-color:  #c0392b;
+  color: #fff !important;
 }
 
 
 
+/* Nav */
+#nav-main a {
+  color: #c0392b;
+}
 
+a.nav-item.nav-link.active {
+  background-color:  #c0392b;
+  color: #fff !important;
+}
+
+
+/* Color for the tree of taxa */
 .tax-selected {
-  color: red
+  color: #c0392b
 }
 
-select option.tax-selected:hover{
-  background-color: red !important;
-  color: #fff !important; 
+
+/* Breadcrumbs */
+
+.breadcrumbs-container ol {
+  background-color: #fff !important;
 }
+
+.breadcrumb {
+  /* color:#fff !important; */
+  color:#c0392b;
+}
+
+.breadcrumb a,
+.breadcrumb a:hover{
+  color:#c0392b;
+  /* color:#fff !important; */
+}
+
+
+#list-samples-multiple-selection {
+  /* background-color: #c0392b; */
+  color: #c0392b;
+  padding: 1rem 0rem 1rem 1rem;
+  /* border-radius: 10px; */
+  border: 1px #c0392b solid;  
+  overflow-y: hidden;
+  max-height: 10rem;
+}
+
+#list-samples-multiple-selection:hover {
+  overflow-y: auto;
+}
+
+/* #multiple-samples-plot {
+  max-height: 25rem;
+} */
+
+
+
+
+
+
+
+
+
+
 
 
 /* / Extra small devices (portrait phones, less than 576px)
 // No media query since this is the default in Bootstrap */
 
 /* // Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { 
+/* @media (min-width: 576px) { 
     html {
       font-size: 1rem;
     }
-}
+} */
 
 /* // Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
+/* @media (min-width: 768px) { 
   html {
     font-size: 1.2rem;
   }
 
-}
+} */
 
 /* // Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
+/* @media (min-width: 992px) { 
     html {
       font-size: 1.4rem;
     }
- }
+ } */
 
 /* // Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  
+/* @media (min-width: 1200px) {  
   html {
     font-size: 1.4rem;
   }
-}
+} */

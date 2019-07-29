@@ -2,27 +2,29 @@
 // Initializing global variables that will be updated when charts are created on the fly
 var canvas = null;
 var ctx = null;
-var myNewChart = null; 
+var myNewChart = null;
 var myHistogram = null;
 var canvas1 = null;
 var ctx1 = null;
 
 // -------------------------------------------------------------------------------------
- 
+
 
 
 // -------------------------------------
 // empty all result dis
 // -------------------------------------
 function empty_result_divs() {
-    var divs = ['samples-drop-down', 'taxonomy-drop-down', 'taxonomy-breadcrumbs', 'additional_information'];
-    divs.map(function(id){
-        $('#' + id ).empty();
+    var divs = ['samples-drop-down', 'taxonomy-drop-down', 'taxonomy-breadcrumbs', 'additional_information',
+        'multiple-samples-plot'];
+    divs.map(function (id) {
+        $('#' + id).empty();
     });
 
     clear_chart();
+    currentTaxonMultipleSamples = '';
 }
- 
+
 // -------------------------------------------------------------------------------------
 // Function setup and draw pie
 // -------------------------------------------------------------------------------------
@@ -33,12 +35,11 @@ function setup_and_draw_chart(taxonomy, abundances, taxon_level_name, width, hei
     }
     catch {
         console.log();
-    }    
+    }
 
     // Initilize a chart
     canvas = document.getElementById("myChart");
     ctx = canvas.getContext('2d');
-    // myNewChart = draw_pie(canvas, ctx, data);
     myNewChart = draw_pie(canvas, ctx, taxonomy, abundances, taxon_level_name)
 
     // Attribute a click event to the newly created chart
@@ -51,33 +52,33 @@ function setup_and_draw_chart(taxonomy, abundances, taxon_level_name, width, hei
             var chartData = activePoints[0]['_chart'].config.data;
             var idx = activePoints[0]['_index'];
             var label = chartData.labels[idx];
-            var value = chartData.datasets[0].data[idx];    
+            var value = chartData.datasets[0].data[idx];
 
             // If a portion of the graph is clicked adjust the grap depensing on the slected taxon
-            if(taxon_level_name.toLowerCase() != "specie"){
+            if (taxon_level_name.toLowerCase() != "specie") {
                 // If we get the label from the plot only it will be trucated to the last taxon
                 // We will get the last taxon from the breadcrumbs
 
                 var lasteLevel = $("#taxonomy-breadcrumbs .breadcrumb .breadcrumb-item:last-of-type a").attr('tax');
                 var taxon = lasteLevel + "; " + label;
 
-                update_chart_after_clicking_portion(taxon);  
-                color_taxons(taxon, taxon_level_name);              
-            }            
+                update_chart_after_clicking_portion(taxon);
+                color_taxons(taxon, taxon_level_name);
+            }
         }
-    }; 
+    };
 };
 
-function update_chart_after_clicking_portion(taxon){   
-   
+function update_chart_after_clicking_portion(taxon) {
+
     change_taxonomy_dropdown_depending_on_taxon(taxon);
     // Fetch the taxonomy
     var el = $("#samples-drop-down  #select-sample")
     fetch_taxon_by_sample(el.val());
-    taxonomy_breadcrumbs(taxon);
-    
+    taxonomy_breadcrumbs('taxonomy-breadcrumbs', taxon);
+
     $('#taxonomy-drop-down select.taxonomy').val("");
-    
+
 }
 
 // -----------------------------------------------------------
@@ -104,24 +105,24 @@ function data_to_dropdown(data, label, numColumnsMd, cssClasses = [], id) {
 // -----------------------------------------------------------
 // Color taxon from lower levels that belong to the selected taxon
 // ----------------------------------------------------------- 
-function color_taxons(taxon, level){
+function color_taxons(taxon, level) {
     var levels = ["kingdom", "phylum", "class", "order", "family", "genus", "specie"];
     var indexOfLevel = levels.indexOf(level.toLowerCase());
-    
+
     $('option').removeClass('tax-selected');
 
-    for(i=0; i<levels.length; i++){
+    for (i = 0; i < levels.length; i++) {
 
         // For heigher level of taxonomy, the taxons will contan the whole name
-        if (i > indexOfLevel){                
-            $("#taxonomy-drop-down #" + levels[i] + " option[value^='" + taxon + "']").each(function(){
+        if (i > indexOfLevel) {
+            $("#taxonomy-drop-down #" + levels[i] + " option[value^='" + taxon + "']").each(function () {
                 $(this).addClass('tax-selected');
             });
         }
         // For lower the will containe just a portion of it
         else {
             var portion = taxon.split("; ").slice(0, i + 1).join("; ");
-            $("#taxonomy-drop-down #" + levels[i] + " option[value^='" + portion + "']").each(function(){
+            $("#taxonomy-drop-down #" + levels[i] + " option[value^='" + portion + "']").each(function () {
                 $(this).addClass('tax-selected');
             });
         }
@@ -132,7 +133,7 @@ function color_taxons(taxon, level){
 // ------------------------------------------------------------------------------------
 // Change the content of the dropdowns depending on the last selected taxon
 // ------------------------------------------------------------------------------------
-function change_taxonomy_dropdown_depending_on_taxon(taxon){
+function change_taxonomy_dropdown_depending_on_taxon(taxon) {
     var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
     // the the value selected is not empty
     var taxonomy = taxon.split('; ');
@@ -145,30 +146,28 @@ function change_taxonomy_dropdown_depending_on_taxon(taxon){
             var tax_pattern = taxonomy.slice(0, i + 1).join("; ");
             // Select the level in the corresponding select drop-down
             // Remove selected from the former selected option                    
-            $("#" + levels[i].toLocaleLowerCase() + ' option[value="' + tax_pattern + '"]').prop("selected", true);            
+            $("#" + levels[i].toLocaleLowerCase() + ' option[value="' + tax_pattern + '"]').prop("selected", true);
         }
-     }
+    }
 }
 
 // ---------------------------------------------------------------------------------------------------------
 // Set the taxonomy in bread crumbs
 // ---------------------------------------------------------------------------------------------------------
-function taxonomy_breadcrumbs(dis_id ,taxon){
-    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"]
+function taxonomy_breadcrumbs(dis_id, taxon) {
+    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
 
-    // $('#taxonomy-breadcrumbs').empty();
     $('#' + dis_id).empty();
     var taxonomy = taxon.split("; ");
 
-    var html = '<nav aria-label="breadcrumb"><ol class="breadcrumb">';
+    var html = '<hr><nav aria-label="breadcrumb" class="breadcrumbs-container"><ol class="breadcrumb mx-3">';
 
-    for(i = 0; i < taxonomy.length -1 ; i++){
-        html +=  '<li class="breadcrumb-item"><a href="#" tax="' + taxonomy.slice(0, i+1).join("; ") + '">' + taxonomy[i] + '</a></li>';
+    for (i = 0; i < taxonomy.length - 1; i++) {
+        html += '<li class="breadcrumb-item"><a href="#" tax="' + taxonomy.slice(0, i + 1).join("; ") + '">' + taxonomy[i] + '</a></li>';
     };
 
-    html +=  '<li class="breadcrumb-item"><a class="bc-link" tax="' + taxonomy.slice(0, taxonomy.length).join("; ") + '">' + taxonomy[taxonomy.length -1] + '</a></li></ol></nav>';
+    html += '<li class="breadcrumb-item"><a class="bc-link" tax="' + taxonomy.slice(0, taxonomy.length).join("; ") + '">' + taxonomy[taxonomy.length - 1] + '</a></li></ol></nav><hr class="mb-5">';
 
-    // $('#taxonomy-breadcrumbs').append(html);
     $('#' + dis_id).append(html);
 
 }
@@ -180,73 +179,73 @@ function taxonomy_breadcrumbs(dis_id ,taxon){
 // ---------------------------------------------------------------------------------------------------------
 
 // This is a setter for the global variable that will containe the data
-function set_global(d){
+function set_global(d) {
     currentTaxon = d;
 }
 
-function fetch_taxon_by_sample(sample){
+function fetch_taxon_by_sample(sample) {
     var height = 400;
     var width = 400;
 
     // Get the lowest taxonomy level selected
     var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
     var lastTaxLevel = "";
-    levels.forEach(function(level){
-        if($('#' + level.toLocaleLowerCase()).val() != ""){
+    levels.forEach(function (level) {
+        if ($('#' + level.toLocaleLowerCase()).val() != "") {
             lastTaxLevel = level.toLocaleLowerCase();
         }
         return;
     });
 
     // If no taxon selected =>don't do anything
-    if (lastTaxLevel ==""){
+    if (lastTaxLevel == "") {
         return;
     }
-    
+
     // Else proceed with the ajax call
     // Get the name of the taxon and remove spaces from it
-    var lastTaxon = $("#" + lastTaxLevel).val().replace(/ /g,'');  
-      
+    var lastTaxon = $("#" + lastTaxLevel).val().replace(/ /g, '');
+
     // Perform Ajax call
-    var url =  'taxon_abundance_by_sample/' + sample + '/' + lastTaxLevel + "/" + lastTaxon;  
-    
+    var url = 'taxon_abundance_by_sample/' + sample + '/' + lastTaxLevel + "/" + lastTaxon;
+
     $.ajax({
-        url: url,            
+        url: url,
         type: "GET",
         contentType: false,
         cache: false,
         processData: false,
-        dataType: 'json',            
+        dataType: 'json',
         beforeSend: function () {
             $("#spinner").show();
         },
         success: function (data) {
-            if (data['status'] == 'success') {                
+            if (data['status'] == 'success') {
                 console.log(data);
                 setup_and_draw_chart(
-                    data['abundance']['taxonomy_of_next_level'], 
-                    data['abundance']['relative_abundances_next_level_global'],                        
-                    data['abundance']["main_taxon_level_name"],                         
+                    data['abundance']['taxonomy_of_next_level'],
+                    data['abundance']['relative_abundances_next_level_global'],
+                    data['abundance']["main_taxon_level_name"],
                     width, height);
-                
+
                 // Store the ajax data in the global variables
-                set_global(data) ; 
-                
+                set_global(data);
+
 
                 $("#additional_information").empty();
-                
-                 var otuNumbers = '<select class="form-control form-control-sm" id="otu-abundance" ><option></option>';   
-                 data['abundance']["non_zero_otus_numbers"].sort().map(function(item){
+
+                var otuNumbers = '<select class="form-control form-control-sm" id="otu-abundance" ><option></option>';
+                data['abundance']["non_zero_otus_numbers"].sort().map(function (item) {
                     otuNumbers += '<option>' + item + '</option>';
-                 });
-                 otuNumbers += '</select>';
-                 
+                });
+                otuNumbers += '</select>';
+
 
 
                 $("#additional_information").append(
-                    '<div class="card"> <div class="card-body"> <ul class="list-group list-group-flush"> <li class="list-group-item">  <div> <canvas id="smallChart" width="100px" height="100px" aria-label="blah blah" role="img"></canvas> </div> </li> <li class="list-group-item">  <p>  Number of OTUs : <span class="text-success">' + 
-                                                data['abundance']['non_zero_otus_abundance_global'].length + 
-                                            '</span> <p>' +  otuNumbers + '<div id="otu-relative-abundance"></div> </li> </ul> </div> </div> ');
+                    '<div class="card"> <div class="card-body"> <ul class="list-group list-group-flush"> <li class="list-group-item">  <div> <canvas id="smallChart" width="100px" height="100px" aria-label="blah blah" role="img"></canvas> </div> </li> <li class="list-group-item">  <p>  Number of OTUs : <span class="text-success">' +
+                    data['abundance']['non_zero_otus_abundance_global'].length +
+                    '</span> <p>' + otuNumbers + '<div id="otu-relative-abundance"></div> </li> </ul> </div> </div> ');
 
 
                 // Draw the histogram
@@ -255,14 +254,14 @@ function fetch_taxon_by_sample(sample){
                 var dataValues = data['abundance']['non_zero_otus_abundance_global'];
                 var dataLabels = data['abundance']['non_zero_otus_numbers'];
 
-                dataValues = dataValues.map(function(x){
-                    return -1/Math.log10(x);
+                dataValues = dataValues.map(function (x) {
+                    return -1 / Math.log10(x);
                 })
 
                 draw_histogram(dataLabels, dataValues);
-                
 
-                                   
+
+
             } else {
                 console.log("An unidentified error occured, please refresh your browser.");
             }
@@ -273,20 +272,19 @@ function fetch_taxon_by_sample(sample){
         },
         complete: function (data) {
             $("#spinner").hide();
-            
+
         }
     });//ajax call     
 }
 
-function draw_histogram(dataLabels, dataValues, backgroundColor='rgba(255, 99, 132, 1)'){
+function draw_histogram(dataLabels, dataValues, backgroundColor = 'rgba(255, 99, 132, 1)') {
     myHistogram = new Chart(ctx1, {
         type: 'bar',
         data: {
             labels: dataLabels,
             datasets: [{
-            // label: 'Group A',
-            data: dataValues,
-            backgroundColor: backgroundColor ,
+                data: dataValues,
+                backgroundColor: backgroundColor,
             }]
         },
         options: {
@@ -295,7 +293,7 @@ function draw_histogram(dataLabels, dataValues, backgroundColor='rgba(255, 99, 1
                 text: 'OTU Distribution'
             },
             legend: {
-                display: false                            
+                display: false
             },
             scales: {
                 xAxes: [{
@@ -309,12 +307,12 @@ function draw_histogram(dataLabels, dataValues, backgroundColor='rgba(255, 99, 1
                         labelString: 'Samples'
                     }
                 }, {
-                    display: false,                            
+                    display: false,
                 }],
                 yAxes: [{
                     ticks: {
                         stepSize: 1,
-                        beginAtZero:true
+                        beginAtZero: true
                     },
                     scaleLabel: {
                         display: true,
@@ -326,9 +324,9 @@ function draw_histogram(dataLabels, dataValues, backgroundColor='rgba(255, 99, 1
     });
 }
 
-function clear_histogram() {    
-    if(myNewChart){
-        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);        
+function clear_histogram() {
+    if (myNewChart) {
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
         myHistogram.destroy();
     }
 }
@@ -337,13 +335,8 @@ function clear_histogram() {
 // Clear the chart 
 // -------------------------------------------------------------------------------------   
 function clear_chart() {
-    // $("#clear-canevas").click(function () {
-    if(myNewChart){
+    if (myNewChart) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // myNewChart = null;
-        // canvas = null;
-        // ctx = null;
-        // $("#chart-container").empty();
         myNewChart.destroy();
     }
 }
@@ -369,9 +362,9 @@ function draw_pie(canvas, ctx, taxonomy, abundances, taxon_level_name) {
     bgColors = generate_colors(taxonomy);
     borderColors = generate_colors(taxonomy);
 
-    var labels = taxonomy.map(function(item){
+    var labels = taxonomy.map(function (item) {
         var tax = item.split('; ');
-        return tax[ tax.length -1 ];
+        return tax[tax.length - 1];
     });
     var abundances = abundances;
 
@@ -380,18 +373,18 @@ function draw_pie(canvas, ctx, taxonomy, abundances, taxon_level_name) {
 
     // Seeting the chart by changing the default behaviour of an onClick event in pie chart specifically
     var original = Chart.defaults.pie.legend.onClick;
-    Chart.defaults.pie.legend.onClick = function(e, legendItem) {    
-    // The label in the chart correspond only to the last porttion of the taxonomy
-    // To get the rest target the last part of the bread crumbs
-    var lasteLevel = $("#taxonomy-breadcrumbs .breadcrumb .breadcrumb-item:last-of-type a").attr('tax');
-    var taxon = lasteLevel + "; " + legendItem.text;
+    Chart.defaults.pie.legend.onClick = function (e, legendItem) {
+        // The label in the chart correspond only to the last porttion of the taxonomy
+        // To get the rest target the last part of the bread crumbs
+        var lasteLevel = $("#taxonomy-breadcrumbs .breadcrumb .breadcrumb-item:last-of-type a").attr('tax');
+        var taxon = lasteLevel + "; " + legendItem.text;
 
         // Check if OTU is in the label
-        if(legendItem.text.indexOf('OTU_') < 0 ){ 
+        if (legendItem.text.indexOf('OTU_') < 0) {
             //  If so update the chart
-            update_chart_after_clicking_portion(taxon);  
+            update_chart_after_clicking_portion(taxon);
             color_taxons(taxon, taxon_level_name);
-        }else {
+        } else {
             // Prevent click events altogether
             e.stopPropagation();
         }
@@ -401,17 +394,17 @@ function draw_pie(canvas, ctx, taxonomy, abundances, taxon_level_name) {
     var myNewChart = new Chart(ctx, {
 
         plugins: [{
-            beforeInit: function(chart, options) {
-              chart.legend.afterFit = function() {
-                this.height = this.height + 1000;
-              };
+            beforeInit: function (chart, options) {
+                chart.legend.afterFit = function () {
+                    this.height = this.height + 1000;
+                };
             }
-          }],
+        }],
         type: 'pie'
         , data: {
             labels: labels,
             datasets: [{
-                label: "Abundance of " +  taxon_level_name,
+                label: "Abundance of " + taxon_level_name,
                 data: abundances,
                 backgroundColor: bgColors,
                 borderColor: borderColors,
@@ -423,12 +416,12 @@ function draw_pie(canvas, ctx, taxonomy, abundances, taxon_level_name) {
             maintainAspectRatio: false,
             legend: {
                 display: true,
-                position: 'right',                
-            }            
+                position: 'right',
+            }
         }
     });
 
-    
+
 
     return (myNewChart)
 } //function draw_pie(canvas, ctx)

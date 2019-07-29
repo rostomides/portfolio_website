@@ -1,70 +1,83 @@
 {% extends 'biom/_partials/main.html' %}
 
-    
-
-{% block content %} 
-    
-
-        
-        
-
-        <div class="jumbotron jumbotron-fluid mt-2">
-            <div class="container px-5">
-                <h1 class="display-5">Microbiome Visualizer v 1.0</h1>
-                <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit recusandae modi soluta, voluptate fuga rerum? Maiores, ipsa quia animi voluptatem provident qui explicabo assumenda atque quis illum! Alias, blanditiis optio?</p>
-            </div>
-        </div>       
 
 
-
-
-        <div class="container mt-5">
-        
-            <form id="form" action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
-                <div class="form-group container">
-                    <input id="input_file" type="file" name="input_file" class="form-control" />
-                </div>
-        
-        
-                <div >
-                    <ul id="messages">
-            
-                    </ul>
-                </div>
-        
-        
-        
-                <div class="form-group container">
-                    <input id="upload-button" class="btn btn-success" type="submit" value="Upload Ajax">
-                </div>
-                
-            </form>
-            
-            <div id="spinner"><img src="../../static/img/loader.gif" alt=""></div>
-        </div> 
+{% block content %}
 
 
 
 
 
-        <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Plotting Single Sample</a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Compare Samples</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Predict If IBD</a>
-        </div>
-        </nav>
 
-        <div class="tab-content mt-5" id="nav-tabContent">
+<div class="jumbotron">
+    <div class="container px-2">
+        <h1 class="display-5">Microbiome Visualizer v 1.0</h1>
+        <p class="lead">Microbiome Visualizer is an intercative web application that allows to produce charts from
+            Operational Taxonomic Units (OTU) tables. It is optimized for Greengenes taxonomy and for OTU tables
+            generated using <a href="http://qiime.org/">QIIME 1.9 pipeline</a>. Microbiome Visualizer has also a feature
+            allowing to predict if a samples is likely to belong to a patient with IBD. Of course this feature is an
+            experimental one and is by no mean a diagnostic tool. Larbi Bedrani is not responsible of any outcome
+            resulting from the usage of the predictions of this feature.</p>
+    </div>
+</div>
 
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                {% include "biom/_partials/_oneSamplePlotting.html" %}
+
+
+
+<div class="container my-5">
+
+    <form id="form" action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input id="input_file" type="file" name="input_file" class="form-control" />
         </div>
 
 
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div>
+            <ul id="messages">
+
+            </ul>
+        </div>
+
+
+
+        <div class="form-group">
+            <input id="upload-button" class="btn" type="submit" value="Upload File">
+        </div>
+
+    </form>
+
+    <div id="spinner"><img src="../../static/img/loader.gif" alt=""></div>
+</div>
+
+
+
+
+<div class="container">
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-main" role="tablist">
+            <a class="nav-item nav-link active" id="nav-single-sample-tab" data-toggle="tab" href="#nav-single-sample"
+                role="tab" aria-controls="nav-single-sample" aria-selected="true">Plotting Single Sample</a>
+
+            <a class="nav-item nav-link" id="nav-compare-samples-tab" data-toggle="tab" href="#nav-compare-samples"
+                role="tab" aria-controls="nav-compare-samples" aria-selected="false">Compare Samples</a>
+
+            <a class="nav-item nav-link" id="nav-predict-ibd-tab" data-toggle="tab" href="#nav-predict-ibd" role="tab"
+                aria-controls="nav-predict-ibd" aria-selected="false">Predict IBD</a>
+        </div>
+    </nav>
+
+    <div class="tab-content mt-5" id="nav-tabContent">
+
+        <div class="tab-pane fade show active" id="nav-single-sample" role="tabpanel"
+            aria-labelledby="nav-single-sample-tab">
+            {% include "biom/_partials/_oneSamplePlotting.html" %}
+        </div>
+
+
+        <div class="tab-pane fade" id="nav-compare-samples" role="tabpanel" aria-labelledby="nav-compare-samples-tab">
             <!-- <h5 class="mt-5">Compare the abundance of 2 or more samples</h5>
-            <h5>Under Construction</h5> -->
+                        <h5>Under Construction</h5> -->
 
 
             {% include "biom/_partials/_multipleSamplesPlotting.html" %}
@@ -72,27 +85,20 @@
         </div>
 
 
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="tab-pane fade" id="nav-predict-ibd" role="tabpanel" aria-labelledby="nav-predict-ibd-tab">
             <h5 class="mt-5">Predict if one or several sample have the same profile as those from IBD patients </h5>
             <h5>Under Construction</h5>
         </div>
 
-        </div>
+    </div>
 
 
-        
 
-    
-
-
-    {% endblock %}
+</div>
 
 
 
 
 
 
-
-
-
-    
+{% endblock %}
