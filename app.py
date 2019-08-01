@@ -23,7 +23,7 @@ from env import *
 from controllers.fileUploadController import *
 
 
-
+ 
 #-----------------------------------------------------------
 #Initialization section
 #-----------------------------------------------------------
@@ -41,6 +41,8 @@ app.config['FILE_UPLOAD_PATH'] = FILE_UPLOAD_PATH
 app.config['ALLOWED_FILES'] = ALLOWED_FILES
 
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
+
+app.config['MACHINE_LEARNING_PATH'] = MACHINE_LEARNING_PATH
 
 # app.config['MAX_SIZE_FILE'] = MAX_SIZE_FILE
 
@@ -208,6 +210,19 @@ def relative_abundance_of_several_samples(samples, taxon):
                         )
 
 
+
+#######################################################################################################
+# Return predictions of IBD non IBD
+#######################################################################################################
+@app.route('/predict_ibd')
+def predict_ibd():  
+
+    predictions = return_ibd_prediction(session["data_set_path"])    
+
+    return jsonify(status="success", 
+                        messages=["Predictions made successfully"],                         
+                        predictions= predictions
+                        )
 
 
 

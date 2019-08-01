@@ -98,6 +98,11 @@ $(document).ready(function (e) {
                     // Empty the taxonomy multiple samples if relevant
                     $('#multiple-samples-taxonomy').empty();
 
+                    // Create the jumbotron in prediction section
+                    $('#ibd-predictions').empty();
+                    $('#ibd-predictions').append(create_disclaimer_message());
+
+
 
                 } else {
 
@@ -356,6 +361,130 @@ $(document).ready(function (e) {
 
     // Get the current year for the copyright
     $('#year').text(new Date().getFullYear());
+
+
+
+    // ############################################################################################################################
+    // #################  IBD prediction
+    // ############################################################################################################################
+
+
+    // --------------------------------------------------------------
+    // Function that adds the disclaimer jumbotron to prediction tab
+    // --------------------------------------------------------------
+
+    function create_disclaimer_message() {
+
+        var disclaimer_text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto cumque et enim voluptatum! Harum tempore ex iste similique, deleniti sit quo voluptates perferendis, ullam id nemo debitis delectus quisquam tenetur amet ipsa. Aliquam voluptatem ea consequuntur placeat atque eius quis fuga provident obcaecati eum explicabo tempore, cupiditate veritatis unde repudiandae?";
+
+        var jumbotron = '<div class="jumbotron"><div class="px-2">';
+        jumbotron += '<h3 class="display-5">Disclamer</h3>';
+
+        jumbotron += '<p class="lead">' + disclaimer_text + '</p>';
+
+        jumbotron += '<input type="checkbox" id="disclaimer-checkbox" name="scales"> <label for="scales">I understand the disclaimer</label>';
+
+        jumbotron += '<br><button class="btn btn-info" id="predict-button" disabled>Make Prdictions</button>';
+
+        jumbotron += '</div></div>';
+
+        return jumbotron
+    }
+
+
+    // --------------------------------------------------------------
+    // Confirming the disclamer
+    // --------------------------------------------------------------
+    $(document).on('change', '#ibd-predictions #disclaimer-checkbox', function () {
+        if ($(this).prop('checked')) {
+            $('#predict-button').prop('disabled', false);
+        } else {
+            $('#predict-button').prop('disabled', true);
+        }
+    });
+
+
+    // --------------------------------------------------------------
+    // Perform prediction
+    // --------------------------------------------------------------
+    $(document).on('click', '#ibd-predictions #predict-button', function () {
+
+        url = '/predict_ibd';
+        $.ajax({
+            url: url,
+            type: "GET",
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function () {
+                $("#spinner").show();
+                $('#predict-button').prop('disabled', true);
+            },
+            success: function (data) {
+                if (data['status'] == 'success') {
+
+
+                    $('#ibd-predictions').append(display_predictions(data['predictions']));
+
+                } else {
+                    console.log("An unidentified error occured, please refresh your browser.");
+                }
+            },
+            error: function (e) {
+                // If any other non managed error
+                $("#messages").html(e).fadeIn();
+                $('#disclaimer-checkbox').prop('checked', false);
+            },
+            complete: function () {
+                $("#spinner").hide();
+                $('#disclaimer-checkbox').prop('checked', false);
+            }
+        }); //ajax call
+
+    });
+
+
+
+
+    // --------------------------------------------------------------
+    // Display predictions
+    // --------------------------------------------------------------
+
+    function display_predictions(data) {
+
+
+        var html = '<div class="container">';
+
+        for (var i = 0; i < data['samples'].length; i++) {
+
+            var proba = Math.round(data['probabilities'][i] * 100);
+            var cl = proba > 50 ? 'bg-danger' : 'bg-success';
+
+            html += '<div class="row">';
+
+            html += '<div class="col-md-4">' + data['samples'][i] + "</div>";
+
+
+            html += '<div class="col-md-8">'
+            html += '<div class="progress">'
+            html += '<div class="progress-bar ' + cl + '" style="width:' + proba + '%">' + proba + '%</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+        }
+
+
+        html += '</div>';
+
+        return html;
+
+
+        // <div class="progress">
+        //     <div class="progress-bar" style="width:70%">70%</div>
+        // </div>
+    }
+
+
 
 
 

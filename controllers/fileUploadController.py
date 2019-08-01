@@ -3,7 +3,20 @@ import numpy as np
 import os
 import json
 import re
+
+from env import *
  
+#  ML imports
+import pickle
+# from sklearn.tree import DecisionTreeClassifier
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.svm import SVC
+# from sklearn.ensemble import GradientBoostingClassifier
+# from sklearn.linear_model import SGDClassifier
+# from sklearn.linear_model import PassiveAggressiveClassifier
+# from xgboost import XGBClassifier
+
+from sklearn.ensemble import RandomForestClassifier
 
  
 #############################################
@@ -268,4 +281,72 @@ def return_taxonomy_of_several_samples(path_to_uploaded_file, samples, taxon):
        
 
     
-    return relative_abundance_return
+    return relative_abundance_return 
+
+
+
+#####################################################################
+# Return Prediction from trained model
+#####################################################################
+def return_ibd_prediction(path_to_uploaded_file):
+    '''
+    Return prediction from a previously trained model using sklearn   
+    '''
+
+    #Load models and the list of feaures
+    model = pickle.load( open( MACHINE_LEARNING_PATH + "/zz_model_8_out_of_8.pickle", "rb" ) ) 
+    model = model['RandomForestClassifier']['RandomForestClassifier_raw']['model_raw']
+    features = pickle.load( open( MACHINE_LEARNING_PATH + "/Reference_list_of_features_to_be_used_in_website.pickle", "rb" ))
+
+    # Load the otu table file
+    otus = pd.read_csv(path_to_uploaded_file, skiprows=1, sep="\t")
+
+
+    #Format the newly upladed otu table
+    #Create columns for all taxonomic levels
+    tax = ["kingdom","phylum", "class", "order", "family", "genus"]
+    for i, v in enumerate(tax):
+        otus[v] = otus['taxonomy'].map(lambda x: "; ".join(x.split("; ")[:i+1]))
+        
+    #Remove archea
+    otus = otus[otus["kingdom"] == "k__Bacteria"]
+
+    #Calculate Relative abundances
+    #Function to calculate relative abundace by level
+    def relative_abundance_by_level(data, level):
+        rel = otus.groupby(level).sum()
+        rel = rel.apply(lambda x : x/sum(x), axis=0)
+        rel['taxon'] = rel.index
+        
+        return(rel)
+
+    relative_abundance = [relative_abundance_by_level(otus, level) for level in tax]
+
+    #Create table of relative abundances
+    #Concatenate all the relative abundances of the different taxonomic levels
+    relative_abundance =  pd.concat(relative_abundance, axis=0, ignore_index=True)
+    relative_abundance.index = relative_abundance['taxon']
+    relative_abundance.drop(['#OTU ID', 'taxon'], axis=1, inplace=True)
+
+    #Transpose the table
+    ra_transpose = relative_abundance.transpose()
+
+    #filter the columns that exist in new file but not in the referesence features
+    mask = ra_transpose.columns.map(lambda x: x in features.keys())
+    ra_transpose = ra_transpose.loc[:, mask]
+
+    #Add the missing columns and populate them with 0
+    for col in features.keys():
+        if not col in ra_transpose.columns:
+            ra_transpose[col] = [0] * ra_transpose.shape[0]
+    
+    #Assign correct feature names
+    ra_transpose.columns = ra_transpose.columns.map(features)
+
+    #Make the prediction and return the object
+    predictions = {
+        'samples': list(ra_transpose.index),
+        'probabilities': [x[1] for x in model.predict_proba(ra_transpose)]
+    }
+
+    return predictions
