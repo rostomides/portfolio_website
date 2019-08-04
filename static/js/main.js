@@ -99,10 +99,9 @@ $(document).ready(function (e) {
                     $('#multiple-samples-taxonomy').empty();
 
                     // Create the jumbotron in prediction section
+
                     $('#ibd-predictions').empty();
                     $('#ibd-predictions').append(create_disclaimer_message());
-
-
 
                 } else {
 
@@ -477,16 +476,56 @@ $(document).ready(function (e) {
         html += '</div>';
 
         return html;
-
-
-        // <div class="progress">
-        //     <div class="progress-bar" style="width:70%">70%</div>
-        // </div>
     }
 
 
 
 
+    // ----------------------------------------------------
+    // Create explanation modal
+    // ----------------------------------------------------
+    function generate_modal(title, body, id) {
+        var html = '<div class="modal" id="' + id + '"><div class="modal-dialog"><div class="modal-content">';
+        html += '<div class="modal-header">';
+        html += '<h4 class="modal-title">' + title + '</h4>';
+        html += '<button type="button" class="close" data-dismiss="modal">&times;</button></div>';
+        html += '<div class="modal-body"><div class="container">' + body + '</div ></div >';
+        html += '<div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></div></div ></div ></div >';
+
+
+
+
+        return html
+
+    }
+
+    // ---------------------------------------------------
+    // Generate a modal
+    // ---------------------------------------------------
+
+    $(document).on('click', '.modal-trigger', function () {
+
+        var target = $(this).attr('data-target');
+        target = target.substr(1, target.length - 1);
+        var id = $(this).attr('id');
+        var title;
+        var body;
+
+        if (id == 'biom-gen-link') {
+
+            title = "File Specifications";
+            body = 'Biom Visualizer expects a file generated using the following steps:';
+            body += '<ul class="p-4"><li>Create a biom file using your pipeline of choice using Greengenes as reference database</li><li>Convert the biom file into a tab separeted file. If you use the Qiime pipeline you can use the following command (<a>official website</a>): ';
+            body += '<span class="command">biom convert -i your-biom-table.biom -o table.from_biom_w_taxonomy.txt --to-tsv --header-key taxonomy </span></li>';
+            body += '<li>Please note that the taxonomy column must appear in your tsv file</li><li>Since this version of the app is a demo version, the file maximum size should not exceed 2MB.</li>';
+            body += '<li>Download an example <a href="/example_file_download" id="download-example-file">here</a></li> </ul>';
+        };
+
+        $('#modal #' + target).modal('toggle');
+        $('#modal').empty();
+        $('#modal').append(generate_modal(title, body, target));
+        $('#modal #' + target).modal('toggle');
+    });
 
 });
 

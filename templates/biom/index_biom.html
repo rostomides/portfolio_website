@@ -12,12 +12,12 @@
 <div class="jumbotron">
     <div class="container px-2">
         <h1 class="display-5">Microbiome Visualizer v 1.0</h1>
-        <p class="lead">Microbiome Visualizer is an intercative web application that allows to produce charts from
-            Operational Taxonomic Units (OTU) tables. It is optimized for Greengenes taxonomy and for OTU tables
-            generated using <a href="http://qiime.org/">QIIME 1.9 pipeline</a>. Microbiome Visualizer has also a feature
-            allowing to predict if a samples is likely to belong to a patient with IBD. Of course this feature is an
-            experimental one and is by no mean a diagnostic tool. Larbi Bedrani is not responsible of any outcome
-            resulting from the usage of the predictions of this feature.</p>
+        <p class="lead">Microbiome Visualizer is an interactive web application that allows to produce charts from
+            Operational Taxonomic Units (OTU) tables. Its current version is optimized for Greengenes taxonomy
+            . Microbiome Visualizer has also a feature
+            allowing to predict if a sample is likely to belong to a patient with IBD. This feature is experimental and
+            can by no mean be used for diagnostic purpose.
+        </p>
     </div>
 </div>
 
@@ -28,6 +28,10 @@
 
     <form id="form" action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
         <div class="form-group">
+            <label for="input_file">Select your OTU table
+                <a id="biom-gen-link" class="modal-trigger" href="#" data-toggle="modal" data-target="#biom-generation">
+                    <i class="fas fa-question-circle" title="More about file specifications"></i></a>
+            </label>
             <input id="input_file" type="file" name="input_file" class="form-control" />
         </div>
 
@@ -76,8 +80,6 @@
 
 
         <div class="tab-pane fade" id="nav-compare-samples" role="tabpanel" aria-labelledby="nav-compare-samples-tab">
-            <!-- <h5 class="mt-5">Compare the abundance of 2 or more samples</h5>
-                        <h5>Under Construction</h5> -->
 
 
             {% include "biom/_partials/_multipleSamplesPlotting.html" %}

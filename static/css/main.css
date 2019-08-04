@@ -100,9 +100,13 @@ a.nav-item.nav-link.active {
   overflow-y: auto;
 }
 
-/* #multiple-samples-plot {
-  max-height: 25rem;
-} */
+.modal-trigger,
+.modal-trigger:hover {
+  text-decoration: none;
+  color: #c0392b;
+}
+
+
 
 
 

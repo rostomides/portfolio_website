@@ -6,7 +6,10 @@ from flask import (Flask,
         render_template, 
         url_for, 
         redirect, 
-        jsonify, session)
+        jsonify, session,
+        send_from_directory,
+        send_file, 
+        abort)
 
 #Formatting the file name
 from werkzeug.utils import secure_filename
@@ -225,6 +228,18 @@ def predict_ibd():
                         )
 
 
+#######################################################
+# Download example file
+########################################################
+
+@app.route('/example_file_download')
+def example_file_download():
+
+    # return send_from_directory(directory=DOWNLOAD_FILE_PATH, filename='example.tsv')
+    try:
+        return send_from_directory(DOWNLOAD_FILE_PATH, filename='example.tsv', as_attachment=True)
+    except FileNotFoundError:
+        abort(404)
 
 #------------------------------------
 # Handeling errors
