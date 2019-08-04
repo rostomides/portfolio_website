@@ -151,6 +151,14 @@
 
       <div class="timeline">
         <ul>
+
+          <li class="date work" data-date="2019 - present">
+            <h1>American Medical Center Laboratories LLC</h1>
+            <h5>Senior Project Manager</h5> 
+            <p>Supervise the development of AI-based solutions for healthcare businesses</p>
+          </li>
+
+
           <li class="date work" data-date="2018 - present">
             <h1>Self Employed, Canada</h1>
             <h5>Independant consultant</h5> 
@@ -319,18 +327,18 @@
     <div class="row ">
       <div class="col-md-12 text-center section-heading">
         <h2>My Projects</h2>
-        <p>List of ongoing projects I am working on or already finished ...</p>
+        <p>List of my ongoing/finished projects ...</p>
       </div>
     </div>
     <div class="container">
 
       <div class="row project-details">
           
-          <div class="col-md-5 pt-3"> <img class="img-fluid img-project" src="../static/img/biom_project.png" alt=""></div>
+          <div class="col-md-5 "><a href="{{url_for('biom_project')}}"><img class="img-fluid img-project" src="../static/img/biom_project.png" alt="" style="text-decoration: none;"></a> </div>
 
           <div class="col-md-7">
             <p>
-              <span class="project-title">Biom Visualizer </span>  is a web application that allows the user to interactively visualize Operational Taxonomic Units (OTUs) tables. It is optomized for GreenGenes taxonomy.
+              <span class="project-title">Biom Visualizer </span>  is a web application that allows the user to interactively visualize Operational Taxonomic Unit (OTU) tables. It is optimized for GreenGenes taxonomy..
             </p>  
             <ul class="feature-list">              
               <li class="title">Current features</li> 
@@ -338,11 +346,7 @@
               <li><i class="fas fa-check"></i> Load OTU Tables</li>
               <li><i class="fas fa-check"></i> Visualize the different taxonomic levels of a single sample</li>
               <li><i class="fas fa-check"></i> Compare several samples at all available taxonomic levels</li> 
-
-              <li class="title">Upcoming features</li>
-              <li>
-                Predict if the microbial profiles input by the user are similar to Inflammatory Bowel Diseases profiles. The predictive model is currently in development and uses the power of machine learning on publically available 16S sequencing datasets of human gut microbiome.
-              </li>   
+              <li><i class="fas fa-check"></i> Predict if a sample is likely to belong to a patient having an Inflammatory Bowel Disease (Crohn's Disease or Ulcerative Colitis)</li>               
             </ul>
 
             <a href="{{url_for('biom_project')}}" class="link-project">Take me there ...</a>

@@ -54,13 +54,13 @@ function fetch_data_and_create_plot(samples) {
     cache: false,
     processData: false,
     beforeSend: function () {
-      $("#spinner").show();
+      $("#spinner-multiple-sample").show();
     },
     success: function (data) {
       if (data['status'] == 'success') {
 
         // Populate the taxonomy dropdowns
-        var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
+        var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"];
         $('#multiple-samples-taxonomy').empty();
         levels.forEach(function (tax) {
           $('#multiple-samples-taxonomy').append(data_to_dropdown(
@@ -87,7 +87,7 @@ function fetch_data_and_create_plot(samples) {
       $("#messages").html(e).fadeIn();
     },
     complete: function () {
-      $("#spinner").hide();
+      $("#spinner-multiple-sample").hide();
     }
   }); //ajax call
 
@@ -108,7 +108,7 @@ function stacked_plot_several_samples(samples, tax) {
     cache: false,
     processData: false,
     beforeSend: function () {
-      $("#spinner").show();
+      $("#spinner-multiple-sample").show();
     },
     success: function (data) {
       if (data['status'] == 'success') {
@@ -124,7 +124,7 @@ function stacked_plot_several_samples(samples, tax) {
       $("#messages").html(e).fadeIn();
     },
     complete: function () {
-      $("#spinner").hide();
+      $("#spinner-multiple-sample").hide();
     }
   }); //ajax call
 }
@@ -137,7 +137,7 @@ function multiple_samples_adjust_dropdowns(tax) {
 
   // Get the level of the taxon in order to target the right dropdown
   var lvl_tax = tax.split('; ').length - 1;
-  var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
+  var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"];
   current_id = 'multiple-' + levels[lvl_tax].toLocaleLowerCase();
 
   // Remove colors from all related taxa

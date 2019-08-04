@@ -9,19 +9,14 @@
 
 
 
-<div class="jumbotron">
+<div class="jumbotron" id="main-jumbotron">
     <div class="container px-2">
         <h1 class="display-5">Microbiome Visualizer v 1.0</h1>
-        <p class="lead">Microbiome Visualizer is an interactive web application that allows to produce charts from
-            Operational Taxonomic Units (OTU) tables. Its current version is optimized for Greengenes taxonomy
-            . Microbiome Visualizer has also a feature
-            allowing to predict if a sample is likely to belong to a patient with IBD. This feature is experimental and
-            can by no mean be used for diagnostic purpose.
+        <p class="lead">Microbiome Visualizer is an interactive web application that allows producing charts from
+                Operational Taxonomic Unit (OTU) tables. Its current version is optimized for Greengenes taxonomy. 
         </p>
-    </div>
+    </div> 
 </div>
-
-
 
 
 <div class="container my-5">
@@ -56,12 +51,12 @@
 
 
 
-<div class="container">
+<div id="main-element" class="container bg-white px-2 pb-2" style="display: none;">
 
     <nav>
         <div class="nav nav-tabs" id="nav-main" role="tablist">
             <a class="nav-item nav-link active" id="nav-single-sample-tab" data-toggle="tab" href="#nav-single-sample"
-                role="tab" aria-controls="nav-single-sample" aria-selected="true">Plotting Single Sample</a>
+                role="tab" aria-controls="nav-single-sample" aria-selected="true">Plot Single Sample</a>
 
             <a class="nav-item nav-link" id="nav-compare-samples-tab" data-toggle="tab" href="#nav-compare-samples"
                 role="tab" aria-controls="nav-compare-samples" aria-selected="false">Compare Samples</a>
@@ -71,15 +66,15 @@
         </div>
     </nav>
 
-    <div class="tab-content mt-5" id="nav-tabContent">
+    <div class="tab-content" id="nav-tabContent">
 
-        <div class="tab-pane fade show active" id="nav-single-sample" role="tabpanel"
+        <div class="tab-pane fade show active pt-5" id="nav-single-sample" role="tabpanel"
             aria-labelledby="nav-single-sample-tab">
             {% include "biom/_partials/_oneSamplePlotting.html" %}
         </div>
 
 
-        <div class="tab-pane fade" id="nav-compare-samples" role="tabpanel" aria-labelledby="nav-compare-samples-tab">
+        <div class="tab-pane fade pt-5" id="nav-compare-samples" role="tabpanel" aria-labelledby="nav-compare-samples-tab">
 
 
             {% include "biom/_partials/_multipleSamplesPlotting.html" %}

@@ -3,10 +3,13 @@ $(document).ready(function (e) {
 
     // Hide the Spinner when the page is loaded
     $('#spinner').hide();
+    $('#spinner-single-sample').hide();
+    $('#spinner-multiple-sample').hide();
+    $('#spinner-predictions').hide();
     // Automatically disable the submit button to prevent any accidental submit without a file selected
     $('#upload-button').attr("disabled", true);
 
-
+ 
 
     // -----------------------------------------------------------
     // File selection and validation based on the extension
@@ -75,6 +78,9 @@ $(document).ready(function (e) {
             success: function (data) {
 
                 if (data['status'] == 'success') {
+
+                    $('#main-element').css('display', 'block');
+
                     // If the submission status is success (see returned object from back-end)                    
                     $.each(data['messages'], function () {
                         $("#messages").append('<li class="text-success">' + data['messages'] + '</li>');
@@ -82,7 +88,8 @@ $(document).ready(function (e) {
 
                     // Populate the samples drop-down
                     $('#samples-drop-down').empty();
-                    $('#samples-drop-down').append(data_to_dropdown(data['samples'], 'Select Samples', 12, ["form-control", 'form-control-sm', 'select'], 'select-sample'));
+
+                    $('#samples-drop-down').append(data_to_dropdown(data['samples'], 'Select a Sample', 12, ["form-control", 'form-control-sm', 'select'], 'select-sample'));
 
                     // Clear the input file field and disable the submit button
                     $('#input_file').val('');
@@ -170,13 +177,13 @@ $(document).ready(function (e) {
             cache: false,
             processData: false,
             beforeSend: function () {
-                $("#spinner").show();
+                $("#spinner-single-sample").show();
             },
             success: function (data) {
                 if (data['status'] == 'success') {
 
                     // Populate the taxonomy dropdowns
-                    var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
+                    var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"];
                     $('#taxonomy-drop-down').empty();
                     levels.forEach(function (tax) {
                         $('#taxonomy-drop-down').append(data_to_dropdown(
@@ -195,7 +202,7 @@ $(document).ready(function (e) {
                 $("#messages").html(e).fadeIn();
             },
             complete: function () {
-                $("#spinner").hide();
+                $("#spinner-single-sample").hide();
             }
         }); //ajax call
 
@@ -374,16 +381,17 @@ $(document).ready(function (e) {
 
     function create_disclaimer_message() {
 
-        var disclaimer_text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto cumque et enim voluptatum! Harum tempore ex iste similique, deleniti sit quo voluptates perferendis, ullam id nemo debitis delectus quisquam tenetur amet ipsa. Aliquam voluptatem ea consequuntur placeat atque eius quis fuga provident obcaecati eum explicabo tempore, cupiditate veritatis unde repudiandae?";
+        var disclaimer_text = 'The results returned by this functionality can by no mean be used for diagnostic purposes. Larbi Bedrani is by no mean responsible of any outcome resulting from the use of the predictions to draw any medical decision. Get more information about how the model has been developed  <a id="ml-model-dev-link" class="modal-trigger" href="#" data-toggle="modal" data-target="#ml-model-dev">        here ...</a>';
 
-        var jumbotron = '<div class="jumbotron"><div class="px-2">';
+       
+        var jumbotron = '<div class="jumbotron mt-5"><div>';
         jumbotron += '<h3 class="display-5">Disclamer</h3>';
 
         jumbotron += '<p class="lead">' + disclaimer_text + '</p>';
 
-        jumbotron += '<input type="checkbox" id="disclaimer-checkbox" name="scales"> <label for="scales">I understand the disclaimer</label>';
+        jumbotron += '<input type="checkbox" id="disclaimer-checkbox" name="scales"> <label for="scales">I have read and I understand the disclaimer</label>';
 
-        jumbotron += '<br><button class="btn btn-info" id="predict-button" disabled>Make Prdictions</button>';
+        jumbotron += '<br><button class="btn btn-info" id="predict-button" disabled>Make Predictions</button>';
 
         jumbotron += '</div></div>';
 
@@ -416,14 +424,14 @@ $(document).ready(function (e) {
             cache: false,
             processData: false,
             beforeSend: function () {
-                $("#spinner").show();
+                $("#spinner-predictions").show();
                 $('#predict-button').prop('disabled', true);
             },
             success: function (data) {
                 if (data['status'] == 'success') {
 
-
-                    $('#ibd-predictions').append(display_predictions(data['predictions']));
+                    $('#ibd-display-predictions').empty();
+                    $('#ibd-display-predictions').append(display_predictions(data['predictions']));
 
                 } else {
                     console.log("An unidentified error occured, please refresh your browser.");
@@ -435,7 +443,7 @@ $(document).ready(function (e) {
                 $('#disclaimer-checkbox').prop('checked', false);
             },
             complete: function () {
-                $("#spinner").hide();
+                $("#spinner-predictions").hide();
                 $('#disclaimer-checkbox').prop('checked', false);
             }
         }); //ajax call
@@ -443,33 +451,30 @@ $(document).ready(function (e) {
     });
 
 
-
-
     // --------------------------------------------------------------
     // Display predictions
     // --------------------------------------------------------------
-
     function display_predictions(data) {
 
 
         var html = '<div class="container">';
+
 
         for (var i = 0; i < data['samples'].length; i++) {
 
             var proba = Math.round(data['probabilities'][i] * 100);
             var cl = proba > 50 ? 'bg-danger' : 'bg-success';
 
-            html += '<div class="row">';
+            
 
-            html += '<div class="col-md-4">' + data['samples'][i] + "</div>";
-
-
-            html += '<div class="col-md-8">'
-            html += '<div class="progress">'
-            html += '<div class="progress-bar ' + cl + '" style="width:' + proba + '%">' + proba + '%</div>';
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
+            html += '<div class="text-center">' + data['samples'][i] + "</div>";
+                
+            html += '<div class="progress-container">'
+                html += '<div class="progress">'
+                    html += '<div class="progress-bar ' + cl + '" style="width:' + proba + '%">' + proba + '%</div>';
+                html += '</div>';
+            
+            html += '</div>';            
         }
 
 
@@ -492,9 +497,6 @@ $(document).ready(function (e) {
         html += '<div class="modal-body"><div class="container">' + body + '</div ></div >';
         html += '<div class="modal-footer"><button type="button" class="btn btn-danger" data-dismiss="modal">Close</button></div></div ></div ></div >';
 
-
-
-
         return html
 
     }
@@ -502,7 +504,6 @@ $(document).ready(function (e) {
     // ---------------------------------------------------
     // Generate a modal
     // ---------------------------------------------------
-
     $(document).on('click', '.modal-trigger', function () {
 
         var target = $(this).attr('data-target');
@@ -519,7 +520,25 @@ $(document).ready(function (e) {
             body += '<span class="command">biom convert -i your-biom-table.biom -o table.from_biom_w_taxonomy.txt --to-tsv --header-key taxonomy </span></li>';
             body += '<li>Please note that the taxonomy column must appear in your tsv file</li><li>Since this version of the app is a demo version, the file maximum size should not exceed 2MB.</li>';
             body += '<li>Download an example <a href="/example_file_download" id="download-example-file">here</a></li> </ul>';
-        };
+        }
+
+        if (id == 'ml-model-dev-link') {
+
+            title = "Predictive model development steps";
+            body = 'The predictive model has been developed using 16S sequencing data from 13 publically available studies on IBD. Then the following steps have been followed:';
+            body += '<ul class="p-4"><li>OTU tables have been constructed using <a href="http://qiime.org/" target="_blank"> QIIME (v1.9)</a> using a closed reference OTU picking procedure against Greengenes database v13_0 (<a href="https://github.com/rostomides/Bioinformatics-pipelines/tree/master/Processing_public_datasets" target="_blank">see pipelines</a>)</li>';
+            body += '<li>OTU tables have been rarefied. The rarefaction depth depended on the study but was never under 2000 reads</li>';
+            body += '<li>All the OTU tables and their metadata have compiled into a single table that has been used to develop the predictive model. The data preprocessing and the machine learning tasks have been achieved using the python libraries: numpy, pandas, Scikit-learn, Xgboost, Catboost and keras for deep learning</li>';
+
+            body += '<li>The model used in these prediction achieved an Area Under The ROC of 0.81 for binary calssification IBD vs NON IBD</li>';
+
+            body += "<li>A more indepth model is currently in development and will hopefully classify non IBD vs Crohn's disease vs Ulcerative Colitis with high precision</li>";
+
+           
+
+            body += '</ul>'
+        
+        }
 
         $('#modal #' + target).modal('toggle');
         $('#modal').empty();

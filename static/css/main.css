@@ -21,11 +21,35 @@ body {
 }
 
 
+body{
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+body::after {
+  content: "";
+  background-image: url('../img/biom_project.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  opacity: 0.2;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+
+
 /* Navbar */
-.jumbotron {
-  margin-top: 20vh;
+.jumbotron {  
   background-color: #c0392b; 
   color: #fff;
+}
+
+.jumbotron#main-jumbotron{
+  margin-top: 20vh;
 }
 
 .jumbotron a,
@@ -54,6 +78,10 @@ body {
 /* Nav */
 #nav-main a {
   color: #c0392b;
+}
+
+.nav-tabs, .nav-item {
+  border-color: #c0392b !important;
 }
 
 a.nav-item.nav-link.active {
@@ -104,6 +132,52 @@ a.nav-item.nav-link.active {
 .modal-trigger:hover {
   text-decoration: none;
   color: #c0392b;
+}
+
+#modal a {
+  text-decoration: none;
+  color: #c0392b;
+}
+
+.command{
+  display: block;
+  background-color: rgba(169, 169, 169,.5);
+  padding: 0.5rem;
+  border-radius: 5%;
+}
+
+
+.progress-container {
+ position:relative;
+ margin-bottom: 1rem;
+  
+}
+
+.progress-container::before {
+  content: "Non IBD";
+  color: #fff;
+  top: -1.5rem;
+  left:0rem;
+  position: absolute;  
+  font-size: 0.7rem;
+  padding: 0.1rem;
+  border: #5cb85c solid 1px;
+  border-radius: 10%;
+  background-color: #5cb85c;
+  
+}
+
+.progress-container::after {
+  content: "IBD";
+  color: #fff;
+  top: -1.5rem;
+  right:0rem;
+  position: absolute;  
+  font-size: 0.7rem;
+  padding: 0.1rem;
+  border: #d9534f solid 1px;
+  border-radius: 10%;
+  background-color: #d9534f;
 }
 
 

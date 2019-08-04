@@ -17,7 +17,7 @@ import pickle
 # from xgboost import XGBClassifier
 
 from sklearn.ensemble import RandomForestClassifier
-
+ 
  
 #############################################
 # Validate the uploaded file
@@ -59,33 +59,7 @@ def validate_uploaded_file(path_to_file):
     if taxonomy_check.sum() > 0:    
         errors.append("The taxonomy layout doesn't follow the Greengenes pattern")   
     
-    return errors
-
-
-
-
-    # at least 3 columns #OTU ID, taxonomy and one sample
-    #first line #....
-    ##OTU ID numeric
-    #taxonomy String with k__ p__ ....
-    #No empty cell
-
-    #file name contains tsv
-    #file size
-
-
-    # #Check if the file name is correct
-# def allowed_extensions(filename):
-#     if "." not in filename:
-#         return False
-#     #Get the extension of the file
-#     ext = filename.rsplit(".", 1)[-1]
-#     if ext.upper() in app.config['ALLOWED_FILES']:
-#         return True
-    
-#     return False
-     
-    
+    return errors    
 
 
 #############################################
@@ -98,7 +72,7 @@ def return_taxonomy_name(dataFrame):
     return the taxonomy by level This will be used to populate thedropdown lists   
     '''    
 
-    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"]
+    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"]
     taxonomy = {}
 
 
@@ -162,7 +136,7 @@ def return_abundance_by_taxon_by_sample(path_to_uploaded_file, sample, level, ta
     It reads the file then creates a columns with the taxa level depending on the n_level argument.
     Creating such column allows to perform groupby operations in order to calculate their abundances    
     '''
-    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie", "OTU"]
+    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species", "OTU"]
 
     data = pd.read_csv(path_to_uploaded_file, skiprows=[0], sep="\t")
 
@@ -235,7 +209,7 @@ def return_taxonomy_of_several_samples(path_to_uploaded_file, samples, taxon):
     Return all the taxonomic level for which at least one sample has counts
     If the taxonomic level has no read for all the samples there is no value to show it   
     '''
-    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie", "OTU"]
+    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species", "OTU"]
     data = pd.read_csv(path_to_uploaded_file, skiprows=[0], sep="\t")
 
     # Convert samples from string to list

@@ -8,7 +8,7 @@ var canvas1 = null;
 var ctx1 = null;
 
 // -------------------------------------------------------------------------------------
-
+ 
 
 
 // -------------------------------------
@@ -55,7 +55,7 @@ function setup_and_draw_chart(taxonomy, abundances, taxon_level_name, width, hei
             var value = chartData.datasets[0].data[idx];
 
             // If a portion of the graph is clicked adjust the grap depensing on the slected taxon
-            if (taxon_level_name.toLowerCase() != "specie") {
+            if (taxon_level_name.toLowerCase() != "species") {
                 // If we get the label from the plot only it will be trucated to the last taxon
                 // We will get the last taxon from the breadcrumbs
 
@@ -106,7 +106,7 @@ function data_to_dropdown(data, label, numColumnsMd, cssClasses = [], id) {
 // Color taxon from lower levels that belong to the selected taxon
 // ----------------------------------------------------------- 
 function color_taxons(taxon, level) {
-    var levels = ["kingdom", "phylum", "class", "order", "family", "genus", "specie"];
+    var levels = ["kingdom", "phylum", "class", "order", "family", "genus", "species"];
     var indexOfLevel = levels.indexOf(level.toLowerCase());
 
     $('option').removeClass('tax-selected');
@@ -134,7 +134,7 @@ function color_taxons(taxon, level) {
 // Change the content of the dropdowns depending on the last selected taxon
 // ------------------------------------------------------------------------------------
 function change_taxonomy_dropdown_depending_on_taxon(taxon) {
-    var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
+    var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"];
     // the the value selected is not empty
     var taxonomy = taxon.split('; ');
     // Split the selected taxon name
@@ -155,7 +155,7 @@ function change_taxonomy_dropdown_depending_on_taxon(taxon) {
 // Set the taxonomy in bread crumbs
 // ---------------------------------------------------------------------------------------------------------
 function taxonomy_breadcrumbs(dis_id, taxon) {
-    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
+    levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"];
 
     $('#' + dis_id).empty();
     var taxonomy = taxon.split("; ");
@@ -178,7 +178,7 @@ function taxonomy_breadcrumbs(dis_id, taxon) {
 // And plot them
 // ---------------------------------------------------------------------------------------------------------
 
-// This is a setter for the global variable that will containe the data
+// This is a setter for the global variable that will contain the data
 function set_global(d) {
     currentTaxon = d;
 }
@@ -188,7 +188,7 @@ function fetch_taxon_by_sample(sample) {
     var width = 400;
 
     // Get the lowest taxonomy level selected
-    var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Specie"];
+    var levels = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"];
     var lastTaxLevel = "";
     levels.forEach(function (level) {
         if ($('#' + level.toLocaleLowerCase()).val() != "") {
@@ -217,7 +217,7 @@ function fetch_taxon_by_sample(sample) {
         processData: false,
         dataType: 'json',
         beforeSend: function () {
-            $("#spinner").show();
+            $("#spinner-single-sample").show();
         },
         success: function (data) {
             if (data['status'] == 'success') {
@@ -271,7 +271,7 @@ function fetch_taxon_by_sample(sample) {
             $("#messages").html(e).fadeIn();
         },
         complete: function (data) {
-            $("#spinner").hide();
+            $("#spinner-single-sample").hide();
 
         }
     });//ajax call     
